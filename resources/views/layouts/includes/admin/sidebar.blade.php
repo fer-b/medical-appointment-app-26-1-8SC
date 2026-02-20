@@ -21,8 +21,8 @@
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
       <a href="/" class="flex items-center ps-2.5 mb-5">
-         <img src="{{ asset('images/logo.png') }}" class="h-6 me-3" alt="Healthify Logo" />
-         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Healthify</span>
+         <img src="{{ asset('images/logo_itm.png') }}" class="h-6 me-3" alt="ITM Logo" />
+         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">ITM</span>
       </a>
       <ul class="space-y-2 font-medium">
          @foreach ($links as $link)
