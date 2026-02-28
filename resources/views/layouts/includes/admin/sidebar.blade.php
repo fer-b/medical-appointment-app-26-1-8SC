@@ -8,30 +8,13 @@
       'active' => request()->routeIs('admin.dashboard')
       ],
       [
-      'header' => 'Administración'
+      'header' => 'Gestión'
       ],
       [
-      'name' => 'Tienda en línea',
-      'icono' => 'fa-solid fa-user',
-      'href' => route('admin.dashboard'),
-      'active' => request()->routeIs('admin.dashboard'),
-      'submenu' => [
-      [
-         'name' => 'Productos',
-         'href' => '#',
-         'active' => false,
-      ],
-      [
-         'name' => 'Categorías',
-         'href' => '#',
-         'active' => false,
-      ],
-      [
-         'name' => 'Pedidos',
-         'href' => '#',
-         'active' => false,
-      ]
-      ]
+      'name' => 'Roles y permisos',
+      'icono' => 'fa-solid fa-shield-halved',
+      'href' => route('admin.roles.index'),
+      'active' => request()->routeIs('admin.roles.*'),
       ]
    ];
 @endphp
