@@ -65,6 +65,32 @@
         @livewireScripts
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 
+    {{-- Confirmar eliminación --}}
+    <script>
+        const forms = document.querySelectorAll('.delete-form');
+        //Busca todos los elementos de una clase específica
+        forms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita el envío del formulario
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡Esta acción no se puede deshacer!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Envía el formulario si el usuario confirma
+                    }
+                });
+            });
+        });
+    </script>
+
 
     </body>
 </html>
