@@ -36,6 +36,11 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+
+            // Nuevos campos
+            'id_number' => strtoupper ($this->faker->bothify('ID-######')), // Genera un número de identificación único
+            'phone' => $this->faker->numerify('9999999999'), // Genera un número de teléfono de 10 dígitos
+            'address' => $this->faker->StreetAddress(), // Genera una dirección completa 
         ];
     }
 
