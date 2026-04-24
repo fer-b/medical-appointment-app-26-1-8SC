@@ -40,13 +40,13 @@ return new class extends Migration
             $table->string('observations')
                 ->nullable();
 
-            $table->date('emergency_contact_name')
+            $table->string('emergency_contact_name')
                 ->nullable();
 
             $table->string('emergency_contact_phone')
                 ->nullable();
 
-            $table->date('emergency_contact_relationship')
+            $table->string('emergency_contact_relationship')
                 ->nullable();
 
 
