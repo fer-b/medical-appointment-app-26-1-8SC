@@ -1,3 +1,20 @@
+@php
+    $errorGroups = [
+        'antecedentes' => ['allergies', 'chronic_conditions', 'surgical_history', 'family_history'],
+        'informacion-general' => ['blood_type_id', 'observations'],
+        'contacto-emergencia' => ['emergency_contact_name', 'emergency_contact_phone', 'emergency_contact_relationship'],
+        ];
+
+    $initialTab = 'datos-personales';
+
+    foreach ($errorGroups as $tabName => $fields) {
+        if ($errors->hasAny($fields)) {
+            $initialTab = $tabName;
+            break;
+        }
+    }
+@endphp
+
 <x-admin-layout title="Pacientes" :breadcrumbs="[
     [
     'name' => 'Dashboard',
@@ -35,8 +52,7 @@
             </x-wire-card>    
             <!-- Tabs de navegación -->
             <x-wire-card>
-                <div x-data="{tab: 'datos-personales'}">
-
+                <div x-data="{tab: '{{$initialTab}}'}">
                     <!-- menu de pestañas -->
                     <div class="border-b border-gray-200">
                         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500">
@@ -54,39 +70,73 @@
                             </li>
 
                             <!-- tab 2: Antecedentes -->
+                             @php
+                                $hasError = $errors->hasAny($errorGroups['antecedentes']);
+                             @endphp
                             <li class="me-2">
                                 <a href="#" x-on:click="tab = 'antecedentes'" 
                                 :class="{
                                     'text-blue-600 border-blue-600 active' : tab === 'antecedentes',
                                     'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'antecedentes'
+                                    'text-red-600 border-red-600' : {{$hasError ? 'true' : 'false'}} && tab !== 'antecedentes',
+                                    'text-blue-600 border-blue-600 active' : tab === 'antecedentes' && !{{$hasError ? 'true' : 'false'}},
+                                    'text-red-600 border-red-600 active' : tab === 'antecedentes' && {{$hasError ? 'true' : 'false'}},
+                                    'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'antecedentes' && !{{$hasError ? 'true' : 'false'}},
                                 }" 
-                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200" :aria-current="tab === 'antecedentes' ? 'page' : undefined">
+                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200
+                                {{ $hasError ? 'text-red-600 border-red-600' : ''}}" 
+                                :aria-current="tab === 'antecedentes' ? 'page' : undefined">
                                 <i class="fa-solid fa-file-lines me-2"></i>
                                     Antecedentes
+                                    @if($hasError)
+                                        <i class="fa-solid fa-circle-exclamation ms-2 animate-pulse"></i>
+                                    @endif
                                 </a>
                             </li>
                             <!-- Tab 3: Información general -->
+                             @php
+                                $hasError = $errors->hasAny($errorGroups['informacion-general']);
+                             @endphp
                             <li class="me-2">
                                 <a href="#" x-on:click="tab = 'informacion-general'" 
                                 :class="{
-                                    'text-blue-600 border-blue-600 active' : tab === 'informacion-general',
-                                    'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'informacion-general'
-                                }" 
-                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200" :aria-current="tab === 'informacion-general' ? 'page' : undefined">
+                                    'text-red-600 border-red-600' : {{$hasError ? 'true' : 'false'}} && tab !== 'informacion-general',
+                                    'text-blue-600 border-blue-600 active' : tab === 'informacion-general' && !{{$hasError ? 'true' : 'false'}},
+                                    'text-red-600 border-red-600 active' : tab === 'informacion-general' && {{$hasError ? 'true' : 'false'}},
+                                    'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'informacion-general' && !{{$hasError ? 'true' : 'false'}},
+                                }"  
+                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200
+                                {{ $hasError ? 'text-red-600 border-red-600' : ''}}"  
+                                :aria-current="tab === 'informacion-general' ? 'page' : undefined">
                                 <i class="fa-solid fa-info me-2"></i>
                                     Información general
+                                    @if($hasError)
+                                        <i class="fa-solid fa-circle-exclamation ms-2 animate-pulse"></i>
+                                    @endif
                                 </a>
                             </li>
                             <!-- Tab 4: Contacto de emergencia -->
+                             @php
+                                $hasError = $errors->hasAny($errorGroups['contacto-emergencia']);
+                             @endphp
                             <li class="me-2">
                                 <a href="#" x-on:click="tab = 'contacto-emergencia'" 
                                 :class="{
                                     'text-blue-600 border-blue-600 active' : tab === 'contacto-emergencia',
                                     'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'contacto-emergencia'
+                                    'text-red-600 border-red-600' : {{$hasError ? 'true' : 'false'}} && tab !== 'contacto-emergencia',
+                                    'text-blue-600 border-blue-600 active' : tab === 'contacto-emergencia' && !{{$hasError ? 'true' : 'false'}},
+                                    'text-red-600 border-red-600 active' : tab === 'contacto-emergencia' && {{$hasError ? 'true' : 'false'}},
+                                    'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== 'contacto-emergencia' && !{{$hasError ? 'true' : 'false'}},
                                 }" 
-                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200" :aria-current="tab === 'contacto-emergencia' ? 'page' : undefined">
+                                class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200
+                                {{ $hasError ? 'text-red-600 border-red-600' : ''}}"  
+                                :aria-current="tab === 'contacto-emergencia' ? 'page' : undefined">
                                 <i class="fa-solid fa-heart me-2"></i>
                                     Contacto de emergencia
+                                    @if($hasError)
+                                        <i class="fa-solid fa-circle-exclamation ms-2 animate-pulse"></i>
+                                    @endif
                                 </a>
                             </li>
                         </ul>
