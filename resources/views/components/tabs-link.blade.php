@@ -1,17 +1,18 @@
-@props(['tab','error' => false])
+@props(['tab', 'error' => false])
 
-<li class="me=2">
-    <a href="#" x-on:click="tab= '{{ $tab }}'"
+<li class="me-2">
+    <a href="#" x-on:click.prevent="tab = '{{ $tab }}'"
     :class="{
-            'text-red-600 border-red-600' : {{$hasError ? 'true' : 'false'}} && tab !== '{{ $tab }}',
-            'text-blue-600 border-blue-600 active' : tab === '{{ $tab }}' && !{{$hasError ? 'true' : 'false'}},
-            'text-red-600 border-red-600 active' : tab === '{{ $tab }}' && {{$hasError ? 'true' : 'false'}},
-            'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== '{{ $tab }}' && !{{$hasError ? 'true' : 'false'}},
-            }" 
-    class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200
-            {{ $hasError ? 'text-red-600 border-red-600' : ''}}" 
+        'text-red-600 border-red-600' : {{ $error ? 'true' : 'false' }} && tab !== '{{ $tab }}',
+        'text-blue-600 border-blue-600 active' : tab === '{{ $tab }}' && !{{ $error ? 'true' : 'false' }},
+        'text-red-600 border-red-600 active' : tab === '{{ $tab }}' && {{ $error ? 'true' : 'false' }},
+        'border-transparent hover:text-blue-600 hover:border-gray-300' : tab !== '{{ $tab }}' && !{{ $error ? 'true' : 'false' }},
+    }" 
+    class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg hover:text-fg-brand group transition-colors duration-200 {{ $error ? 'text-red-600 border-red-600' : '' }}" 
     :aria-current="tab === '{{ $tab }}' ? 'page' : undefined">
+        
         {{ $slot }}
+
         @if($error)
             <i class="fa-solid fa-circle-exclamation ms-2 animate-pulse"></i>
         @endif
