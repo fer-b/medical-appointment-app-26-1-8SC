@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Observers\AppointmentObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
+#[ObservedBy(AppointmentObserver::class)]
 class Appointment extends Model
 {
     protected $fillable = [
