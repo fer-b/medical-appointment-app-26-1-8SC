@@ -4,11 +4,11 @@ namespace App\Livewire\Admin;
 
 use Livewire\Component;
 
-use App\Models\Doctor;
-use App\Models\Patient;
-use App\Models\Appointment;
+use App\Models\Employee;
+use App\Models\Client;
+use App\Models\Order;
 
-class AppointmentCreate extends Component
+class OrderCreate extends Component
 {
     // Search fields
     public $searchDate;
@@ -16,51 +16,51 @@ class AppointmentCreate extends Component
     public $searchSpecialty;
     
     // Results
-    public $availableDoctors = [];
+    public $availableEmployees = [];
     
-    // Selected for Appointment
-    public $selectedDoctor;
+    // Selected for Order
+    public $selectedEmployee;
     public $selectedTime;
-    public $patient_id;
+    public $client_id;
     public $reason;
     
     public function mount()
     {
         $this->searchDate = date('Y-m-d');
-        $this->availableDoctors = Doctor::with('user')->get();
+        $this->availableEmployees = Employee::with('user')->get();
     }
     
     public function searchAvailability()
     {
-        $query = Doctor::with('user');
+        $query = Employee::with('user');
         if ($this->searchSpecialty) {
             $query->where('specialty', 'like', '%' . $this->searchSpecialty . '%');
         }
-        $this->availableDoctors = $query->get();
-        $this->selectedDoctor = null;
+        $this->availableEmployees = $query->get();
+        $this->selectedEmployee = null;
         $this->selectedTime = null;
     }
     
-    public function selectTimeSlot($doctorId, $time)
+    public function selectTimeSlot($employeeId, $time)
     {
-        $this->selectedDoctor = Doctor::with('user')->find($doctorId);
+        $this->selectedEmployee = Employee::with('user')->find($employeeId);
         $this->selectedTime = $time;
     }
     
     public function confirmAppointment()
     {
         $this->validate([
-            'selectedDoctor' => 'required',
+            'selectedEmployee' => 'required',
             'searchDate' => 'required|date|after_or_equal:today',
             'selectedTime' => 'required',
-            'patient_id' => 'required|exists:patients,id',
+            'client_id' => 'required|exists:clients,id',
             'reason' => 'required|string',
         ], [
-            'selectedDoctor.required' => 'Debe seleccionar un horario disponible.',
+            'selectedEmployee.required' => 'Debe seleccionar un horario disponible.',
             'selectedTime.required' => 'Debe seleccionar un horario disponible.',
-            'patient_id.required' => 'Debe seleccionar un paciente.',
-            'reason.required' => 'El motivo de la cita es obligatorio.',
-            'searchDate.after_or_equal' => 'No se pueden registrar citas en fechas pasadas.',
+            'client_id.required' => 'Debe seleccionar un cliente.',
+            'reason.required' => 'El motivo del pedido es obligatorio.',
+            'searchDate.after_or_equal' => 'No se pueden registrar pedidos en fechas pasadas.',
         ]);
         
         $startTime = \Carbon\Carbon::parse($this->selectedTime);
@@ -68,13 +68,13 @@ class AppointmentCreate extends Component
         $appointmentDateTime = \Carbon\Carbon::parse($this->searchDate . ' ' . $this->selectedTime);
         
         if ($appointmentDateTime->isPast()) {
-            $this->addError('selectedTime', 'No se puede agendar una cita en una hora pasada.');
+            $this->addError('selectedTime', 'No se puede agendar un pedido en una hora pasada.');
             return;
         }
         
-        Appointment::create([
-            'patient_id' => $this->patient_id,
-            'doctor_id' => $this->selectedDoctor->id,
+        Order::create([
+            'client_id' => $this->client_id,
+            'employee_id' => $this->selectedEmployee->id,
             'date' => $this->searchDate,
             'start_time' => $startTime->format('H:i:s'),
             'end_time' => $endTime->format('H:i:s'),
@@ -86,15 +86,15 @@ class AppointmentCreate extends Component
         session()->flash('swal', [
             'icon' => 'success',
             'title' => 'Guardado correctamente',
-            'text' => 'La cita se ha guardado correctamente.'
+            'text' => 'El pedido se ha guardado correctamente.'
         ]);
         
-        return redirect()->route('admin.appointments.index');
+        return redirect()->route('admin.orders.index');
     }
 
     public function render()
     {
-        $patients = Patient::with('user')->get();
-        return view('livewire.admin.appointment-create', compact('patients'));
+        $clients = Client::with('user')->get();
+        return view('livewire.admin.order-create', compact('clients'));
     }
 }
