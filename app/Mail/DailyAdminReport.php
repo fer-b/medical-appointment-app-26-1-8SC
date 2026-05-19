@@ -13,14 +13,14 @@ class DailyAdminReport extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $appointments;
+    public $orders;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($appointments)
+    public function __construct($orders)
     {
-        $this->appointments = $appointments;
+        $this->orders = $orders;
     }
 
     /**
@@ -29,7 +29,7 @@ class DailyAdminReport extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reporte Diario de Citas Médicas - ' . now()->format('d/m/Y'),
+            subject: 'Reporte Diario de Pedidos - ' . now()->format('d/m/Y'),
         );
     }
 
@@ -41,7 +41,7 @@ class DailyAdminReport extends Mailable
         return new Content(
             view: 'emails.daily-admin-report',
             with: [
-                'appointments' => $this->appointments,
+                'orders' => $this->orders,
             ]
         );
     }

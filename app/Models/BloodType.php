@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class BloodType extends Model
 {
-    // Relación uno a muchos con pacientes
-    public function patients()
+    // Relación uno a muchos con clientes
+    public function clients()
     {
-        return $this->HasMany(Patient::class);
+        return $this->hasMany(Client::class);
     }
 }

@@ -77,7 +77,7 @@
             <div class="bg-white rounded-lg shadow p-6 sticky top-6">
                 <h3 class="text-lg font-bold text-gray-900 mb-6">Resumen del pedido</h3>
                 
-                <form wire:submit.prevent="confirmAppointment">
+                <form wire:submit.prevent="confirmOrder">
                     <!-- Read-only Summary Details -->
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between border-b border-gray-100 pb-2">

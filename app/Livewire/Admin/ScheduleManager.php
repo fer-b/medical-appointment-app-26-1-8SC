@@ -3,12 +3,12 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\Doctor;
+use App\Models\Employee;
 use App\Models\Schedule;
 
 class ScheduleManager extends Component
 {
-    public Doctor $doctor;
+    public Employee $employee;
     public $day;
     public $start_time;
     public $end_time;
@@ -23,10 +23,10 @@ class ScheduleManager extends Component
         'end_time.after' => 'La hora de fin debe ser posterior a la hora de inicio.',
     ];
 
-    public function mount(Doctor $doctor)
+    public function mount(Employee $employee)
     {
-        $this->doctor = $doctor;
-        $this->doctor->load('user', 'schedules');
+        $this->employee = $employee;
+        $this->employee->load('user', 'schedules');
     }
 
     public function addSchedule()
@@ -34,14 +34,14 @@ class ScheduleManager extends Component
         $this->validate();
 
         Schedule::create([
-            'doctor_id' => $this->doctor->id,
+            'employee_id' => $this->employee->id,
             'day' => $this->day,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
         ]);
 
         $this->reset(['day', 'start_time', 'end_time']);
-        $this->doctor->load('schedules');
+        $this->employee->load('schedules');
         
         session()->flash('swal', [
             'icon' => 'success',
@@ -53,16 +53,16 @@ class ScheduleManager extends Component
     public function deleteSchedule($scheduleId)
     {
         Schedule::findOrFail($scheduleId)->delete();
-        $this->doctor->load('schedules');
+        $this->employee->load('schedules');
     }
 
     public function render()
     {
         return view('livewire.admin.schedule-manager')->layout('layouts.admin', [
-            'title' => 'Horarios del Doctor',
+            'title' => 'Horarios del Empleado',
             'breadcrumbs' => [
                 ['name' => 'Dashboard', 'route' => route('admin.dashboard')],
-                ['name' => 'Doctores', 'route' => route('admin.doctors.index')],
+                ['name' => 'Empleados', 'route' => route('admin.employees.index')],
                 ['name' => 'Horarios']
             ]
         ]);

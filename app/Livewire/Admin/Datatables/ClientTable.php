@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ClientTable extends DataTableComponent
 {
-    // protected $model = Patient::class;
+    // protected $model = Client::class;
 
     // Este método define el modelo
     public function builder(): Builder

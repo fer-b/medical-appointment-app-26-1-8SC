@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Observers\AppointmentObserver;
+use App\Observers\OrderObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
-#[ObservedBy(AppointmentObserver::class)]
+#[ObservedBy(OrderObserver::class)]
 class Order extends Model
 {
     protected $fillable = [

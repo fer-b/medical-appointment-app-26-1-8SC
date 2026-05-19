@@ -25,4 +25,4 @@ Route::get('employees/{employee}/schedules', \App\Livewire\Admin\ScheduleManager
 
 //Gestión de pedidos
 Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
-Route::get('orders/{order}/consultation', \App\Livewire\Admin\ConsultationManager::class)->name('orders.consultation');
+Route::get('orders/{order}/fulfill', \App\Livewire\Admin\OrderManager::class)->name('orders.fulfill');

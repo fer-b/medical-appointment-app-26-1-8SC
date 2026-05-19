@@ -47,7 +47,7 @@ class OrderCreate extends Component
         $this->selectedTime = $time;
     }
     
-    public function confirmAppointment()
+    public function confirmOrder()
     {
         $this->validate([
             'selectedEmployee' => 'required',
@@ -65,9 +65,9 @@ class OrderCreate extends Component
         
         $startTime = \Carbon\Carbon::parse($this->selectedTime);
         $endTime = $startTime->copy()->addMinutes(15);
-        $appointmentDateTime = \Carbon\Carbon::parse($this->searchDate . ' ' . $this->selectedTime);
+        $orderDateTime = \Carbon\Carbon::parse($this->searchDate . ' ' . $this->selectedTime);
         
-        if ($appointmentDateTime->isPast()) {
+        if ($orderDateTime->isPast()) {
             $this->addError('selectedTime', 'No se puede agendar un pedido en una hora pasada.');
             return;
         }
