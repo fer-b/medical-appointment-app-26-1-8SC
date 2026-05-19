@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class DoctorSeeder extends Seeder
+class EmployeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,9 +15,9 @@ class DoctorSeeder extends Seeder
         $users = \App\Models\User::factory(10)->create();
 
         foreach ($users as $user) {
-            $user->assignRole('Doctor');
+            $user->assignRole('employee');
             
-            \App\Models\Doctor::factory()->create([
+            \App\Models\Employee::factory()->create([
                 'user_id' => $user->id,
             ]);
         }

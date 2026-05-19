@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Doctor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
  */
-class DoctorFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,7 +18,7 @@ class DoctorFactory extends Factory
     {
         return [
             'user_id' => \App\Models\User::factory(),
-            'specialty' => $this->faker->randomElement(['Cardiology', 'Neurology', 'Pediatrics', 'Oncology', 'Dermatology', 'Psychiatry', 'General Surgery']),
+            'specialty' => $this->faker->randomElement(['Brewer', 'Bartender', 'Manager', 'Sales', 'Delivery']),
         ];
     }
 }

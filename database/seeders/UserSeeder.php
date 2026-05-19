@@ -21,6 +21,6 @@ class UserSeeder extends Seeder
             'id_number' => '123456789',
             'phone' => '9999999999',
             'address' => 'Test Address',
-        ])->assignRole('Administrador');
+        ])->assignRole('admin');
     }
 }
