@@ -1,7 +1,7 @@
 <div class="flex items-center gap-2">
     <!-- View / Consultation -->
-    <a href="{{ route('admin.appointments.consultation', $appointment) }}" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center" title="Atender Cita">
-        <i class="fa-solid fa-stethoscope"></i>
+    <a href="{{ route('admin.orders.consultation', $order) }}" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center" title="Atender Pedido">
+        <i class="fa-solid fa-clipboard-check"></i>
     </a>
     
     <!-- Edit (Optional placeholder) -->
@@ -10,7 +10,7 @@
     </a>
 
     <!-- Delete -->
-    <form action="{{ route('admin.appointments.destroy', $appointment) }}" method="POST" class="delete-form inline-block">
+    <form action="{{ route('admin.orders.destroy', $order) }}" method="POST" class="delete-form inline-block">
         @csrf
         @method('DELETE')
         <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center">

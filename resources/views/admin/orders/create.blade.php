@@ -4,14 +4,14 @@
         'route' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Citas',
-        'route' => route('admin.appointments.index'),
+        'name' => 'Pedidos / Reservas',
+        'route' => route('admin.orders.index'),
     ],
     [
         'name' => 'Nuevo',
     ],
 ]">
 
-    @livewire('admin.appointment-create')
+    @livewire('admin.order-create')
 
 </x-admin-layout>

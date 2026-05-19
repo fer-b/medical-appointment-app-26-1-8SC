@@ -4,10 +4,10 @@ namespace App\Livewire\Admin\Datatables;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Patient;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Builder;
 
-class PatientTable extends DataTableComponent
+class ClientTable extends DataTableComponent
 {
     // protected $model = Patient::class;
 
@@ -15,7 +15,7 @@ class PatientTable extends DataTableComponent
     public function builder(): Builder
     {
         // Devuelve la relación con roles
-        return Patient::query()
+        return Client::query()
         ->with('user');
     }
 
@@ -40,8 +40,8 @@ class PatientTable extends DataTableComponent
 
             Column::make("Acciones")
                 ->label(function($row){
-                    return view('admin.patients.actions',
-                ['patient' => $row]);
+                    return view('admin.clients.actions',
+                ['client' => $row]);
                 })
         ];
     }

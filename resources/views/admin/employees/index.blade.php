@@ -4,7 +4,7 @@
         'route' => route('admin.dashboard'),
     ],
     [
-        'name' => 'Doctores',
+        'name' => 'Empleados',
     ],
 ]">
 
@@ -33,26 +33,26 @@
                     <th scope="col" class="px-6 py-3">EMAIL</th>
                     <th scope="col" class="px-6 py-3">DNI</th>
                     <th scope="col" class="px-6 py-3">TELÉFONO</th>
-                    <th scope="col" class="px-6 py-3">ESPECIALIDAD</th>
+                    <th scope="col" class="px-6 py-3">ROL / PUESTO</th>
                     <th scope="col" class="px-6 py-3">ACCIONES</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($doctors as $doctor)
+                @forelse ($employees as $employee)
                     <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="px-6 py-4">{{ $doctor->id }}</td>
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $doctor->user->name ?? 'N/A' }}</td>
-                        <td class="px-6 py-4">{{ $doctor->user->email ?? 'N/A' }}</td>
-                        <td class="px-6 py-4">{{ $doctor->user->id_number ?? 'N/A' }}</td>
-                        <td class="px-6 py-4">{{ $doctor->user->phone ?? 'N/A' }}</td>
-                        <td class="px-6 py-4">{{ $doctor->specialty ?? 'N/A' }}</td>
+                        <td class="px-6 py-4">{{ $employee->id }}</td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $employee->user->name ?? 'N/A' }}</td>
+                        <td class="px-6 py-4">{{ $employee->user->email ?? 'N/A' }}</td>
+                        <td class="px-6 py-4">{{ $employee->user->id_number ?? 'N/A' }}</td>
+                        <td class="px-6 py-4">{{ $employee->user->phone ?? 'N/A' }}</td>
+                        <td class="px-6 py-4">{{ $employee->specialty ?? 'N/A' }}</td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-2">
                                 <a href="#" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <!-- Green Clock button (Horarios placeholder) -->
-                                <a href="{{ route('admin.doctors.schedules', $doctor) }}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center" title="Horarios del doctor">
+                                <a href="{{ route('admin.employees.schedules', $employee) }}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center" title="Horarios del empleado">
                                     <i class="fa-solid fa-clock"></i>
                                 </a>
                             </div>
@@ -60,14 +60,14 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="px-6 py-4 text-center">No hay doctores registrados</td>
+                        <td colspan="7" class="px-6 py-4 text-center">No hay empleados registrados</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
         
         <div class="mt-4 p-4">
-            {{ $doctors->links() }}
+            {{ $employees->links() }}
         </div>
     </div>
 
