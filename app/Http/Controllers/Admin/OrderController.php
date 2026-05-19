@@ -5,30 +5,30 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Appointment;
-use App\Models\Patient;
-use App\Models\Doctor;
+use App\Models\Order;
+use App\Models\Client;
+use App\Models\Employee;
 
-class AppointmentController extends Controller
+class OrderController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::with(['patient.user', 'doctor.user'])->latest()->paginate(10);
-        return view('admin.appointments.index', compact('appointments'));
+        $orders = Order::with(['client.user', 'employee.user'])->latest()->paginate(10);
+        return view('admin.orders.index', compact('orders'));
     }
 
     public function create()
     {
-        $patients = Patient::with('user')->get();
-        $doctors = Doctor::with('user')->get();
-        return view('admin.appointments.create', compact('patients', 'doctors'));
+        $clients = Client::with('user')->get();
+        $employees = Employee::with('user')->get();
+        return view('admin.orders.create', compact('clients', 'employees'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
+            'client_id' => 'required|exists:clients,id',
+            'employee_id' => 'required|exists:employees,id',
             'date' => 'required|date|after_or_equal:today',
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i|after:start_time',
@@ -41,12 +41,12 @@ class AppointmentController extends Controller
         $end = \Carbon\Carbon::parse($request->end_time);
         $data['duration'] = $end->diffInMinutes($start);
 
-        Appointment::create($data);
+        Order::create($data);
 
-        return redirect()->route('admin.appointments.index')->with('swal', [
+        return redirect()->route('admin.orders.index')->with('swal', [
             'icon' => 'success',
-            'title' => 'Cita creada',
-            'text' => 'La cita se ha registrado correctamente.'
+            'title' => 'Pedido creado',
+            'text' => 'El pedido se ha registrado correctamente.'
         ]);
     }
 
@@ -67,13 +67,13 @@ class AppointmentController extends Controller
 
     public function destroy(string $id)
     {
-        $appointment = Appointment::findOrFail($id);
-        $appointment->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
 
-        return redirect()->route('admin.appointments.index')->with('swal', [
+        return redirect()->route('admin.orders.index')->with('swal', [
             'icon' => 'success',
-            'title' => 'Cita eliminada',
-            'text' => 'La cita ha sido eliminada.'
+            'title' => 'Pedido eliminado',
+            'text' => 'El pedido ha sido eliminado.'
         ]);
     }
 }

@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Doctor;
+use App\Models\Employee;
 
-class DoctorController extends Controller
+class EmployeeController extends Controller
 {
     public function index()
     {
-        $doctors = Doctor::with('user')->latest()->paginate(10);
-        return view('admin.doctors.index', compact('doctors'));
+        $employees = Employee::with('user')->latest()->paginate(10);
+        return view('admin.employees.index', compact('employees'));
     }
 
     public function create()

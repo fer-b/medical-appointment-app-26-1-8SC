@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\patient;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Models\BloodType;
 
-class PatientController extends Controller
+class ClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.patients.index');
+        return view('admin.clients.index');
     }
 
     /**
@@ -22,7 +22,7 @@ class PatientController extends Controller
      */
     public function create()
     {
-        return view('admin.patients.create');
+        return view('admin.clients.create');
     }
 
     /**
@@ -36,24 +36,24 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(patient $patient)
+    public function show(Client $client)
     {
-        return view('admin.patients.show', compact('patient'));
+        return view('admin.clients.show', compact('client'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(patient $patient)
+    public function edit(Client $client)
     {   
         $bloodTypes = BloodType::all();
-        return view('admin.patients.edit', compact('patient', 'bloodTypes'));
+        return view('admin.clients.edit', compact('client', 'bloodTypes'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, patient $patient)
+    public function update(Request $request, Client $client)
     {
         $data = $request->validate([
             'blood_type_id' => 'nullable|exists:blood_types,id',
@@ -66,21 +66,21 @@ class PatientController extends Controller
             'emergency_contact_phone' => ['nullable','string','max:12', 'min:10'],
             'emergency_contact_relationship' => 'nullable|string|min:3|max:50',
         ]);
-        $patient->update($data);
+        $client->update($data);
 
         session()->flash('swal',[
             'icon' => 'success',
-            'title' => 'Paciente actualizado',
-            'text' => 'Paciente actualizado correctamente.',
+            'title' => 'Cliente actualizado',
+            'text' => 'Cliente actualizado correctamente.',
         ]);
 
-        return redirect()->route('admin.patients.edit', $patient)->with('success', 'Paciente actualizado correctamente.');
+        return redirect()->route('admin.clients.edit', $client)->with('success', 'Cliente actualizado correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(patient $patient)
+    public function destroy(Client $client)
     {
         //
     }
