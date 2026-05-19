@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Appointment;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,19 +13,19 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class AppointmentCreated extends Mailable
+class OrderCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $appointment;
+    public $order;
     public $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Appointment $appointment, User $user)
+    public function __construct(Order $order, User $user)
     {
-        $this->appointment = $appointment;
+        $this->order = $order;
         $this->user = $user;
     }
 
@@ -35,7 +35,7 @@ class AppointmentCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Confirmación de Cita Médica',
+            subject: 'Confirmación de Pedido',
         );
     }
 
@@ -45,9 +45,9 @@ class AppointmentCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.appointment-created',
+            view: 'emails.order-created',
             with: [
-                'appointment' => $this->appointment,
+                'order' => $this->order,
                 'user' => $this->user,
             ]
         );
@@ -61,11 +61,11 @@ class AppointmentCreated extends Mailable
     public function attachments(): array
     {
         // Generate PDF in memory
-        $pdf = Pdf::loadView('pdfs.appointment-receipt', ['appointment' => $this->appointment]);
+        $pdf = Pdf::loadView('pdfs.order-receipt', ['order' => $this->order]);
         $pdfContent = $pdf->output();
 
         return [
-            Attachment::fromData(fn () => $pdfContent, 'Comprobante_Cita_'.$this->appointment->id.'.pdf')
+            Attachment::fromData(fn () => $pdfContent, 'Comprobante_Pedido_'.$this->order->id.'.pdf')
                 ->withMime('application/pdf'),
         ];
     }

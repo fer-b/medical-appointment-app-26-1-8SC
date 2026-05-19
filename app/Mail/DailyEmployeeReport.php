@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Doctor;
+use App\Models\Employee;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,21 +10,21 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class DailyDoctorReport extends Mailable
+class DailyEmployeeReport extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $appointments;
-    public $doctor;
+    public $orders;
+    public $employee;
     public $isFullSchedule;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Doctor $doctor, $appointments, $isFullSchedule = false)
+    public function __construct(Employee $employee, $orders, $isFullSchedule = false)
     {
-        $this->doctor = $doctor;
-        $this->appointments = $appointments;
+        $this->employee = $employee;
+        $this->orders = $orders;
         $this->isFullSchedule = $isFullSchedule;
     }
 
@@ -34,8 +34,8 @@ class DailyDoctorReport extends Mailable
     public function envelope(): Envelope
     {
         $subject = $this->isFullSchedule 
-            ? 'Tu Agenda Completa de Citas' 
-            : 'Tu agenda de citas para hoy - ' . now()->format('d/m/Y');
+            ? 'Tu Agenda Completa de Pedidos' 
+            : 'Tu agenda de pedidos para hoy - ' . now()->format('d/m/Y');
 
         return new Envelope(
             subject: $subject,
@@ -48,10 +48,10 @@ class DailyDoctorReport extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.daily-doctor-report',
+            view: 'emails.daily-employee-report',
             with: [
-                'doctor' => $this->doctor,
-                'appointments' => $this->appointments,
+                'employee' => $this->employee,
+                'orders' => $this->orders,
                 'isFullSchedule' => $this->isFullSchedule,
             ]
         );
@@ -64,14 +64,14 @@ class DailyDoctorReport extends Mailable
      */
     public function attachments(): array
     {
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdfs.daily-doctor-report', [
-            'doctor' => $this->doctor,
-            'appointments' => $this->appointments,
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdfs.daily-employee-report', [
+            'employee' => $this->employee,
+            'orders' => $this->orders,
             'isFullSchedule' => $this->isFullSchedule,
         ]);
 
         return [
-            \Illuminate\Mail\Mailables\Attachment::fromData(fn () => $pdf->output(), 'Agenda_Citas_' . now()->format('d-m-Y') . '.pdf')
+            \Illuminate\Mail\Mailables\Attachment::fromData(fn () => $pdf->output(), 'Agenda_Pedidos_' . now()->format('d-m-Y') . '.pdf')
                 ->withMime('application/pdf'),
         ];
     }

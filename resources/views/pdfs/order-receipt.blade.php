@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprobante de Cita</title>
+    <title>Comprobante de Pedido</title>
     <style>
         body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.6; }
         .container { width: 100%; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
@@ -18,36 +18,36 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Comprobante de Cita Médica</h1>
-            <p>Hospital Central</p>
+            <h1>Comprobante de Pedido</h1>
+            <p>Home Brewing</p>
         </div>
         
         <table class="details-table">
             <tr>
-                <th>Paciente</th>
-                <td>{{ $appointment->patient->user->name }}</td>
+                <th>Cliente</th>
+                <td>{{ $order->client->user->name }}</td>
             </tr>
             <tr>
-                <th>Médico (Especialidad)</th>
-                <td>Dr/Dra. {{ $appointment->doctor->user->name }} ({{ $appointment->doctor->specialty }})</td>
+                <th>Atendido por (Rol)</th>
+                <td>{{ $order->employee->user->name }} ({{ $order->employee->specialty }})</td>
             </tr>
             <tr>
-                <th>Fecha de la Cita</th>
-                <td>{{ \Carbon\Carbon::parse($appointment->date)->format('d/m/Y') }}</td>
+                <th>Fecha de Entrega</th>
+                <td>{{ \Carbon\Carbon::parse($order->date)->format('d/m/Y') }}</td>
             </tr>
             <tr>
-                <th>Hora</th>
-                <td>{{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($appointment->end_time)->format('H:i') }}</td>
+                <th>Hora Programada</th>
+                <td>{{ \Carbon\Carbon::parse($order->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($order->end_time)->format('H:i') }}</td>
             </tr>
             <tr>
-                <th>Motivo de Consulta</th>
-                <td>{{ $appointment->reason ?? 'No especificado' }}</td>
+                <th>Motivo del Pedido</th>
+                <td>{{ $order->reason ?? 'No especificado' }}</td>
             </tr>
         </table>
         
         <div class="footer">
-            <p>Por favor, asista 15 minutos antes de la hora programada.</p>
-            <p>Si necesita cancelar, comuníquese con al menos 24 horas de anticipación.</p>
+            <p>Por favor, recuerde que su pedido estará listo en la fecha indicada.</p>
+            <p>Si necesita cancelar, comuníquese con al menos 2 horas de anticipación.</p>
         </div>
     </div>
 </body>

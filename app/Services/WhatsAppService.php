@@ -13,20 +13,20 @@ class WhatsAppService
     }
 
     /**
-     * Sends an appointment confirmation message.
+     * Sends an order confirmation message.
      */
-    public function sendConfirmation($phone, $appointmentData)
+    public function sendConfirmation($phone, $orderData)
     {
-        $message = "Hola {$appointmentData['patient_name']}, tu cita médica con el Dr/Dra. {$appointmentData['doctor_name']} ha sido agendada para el día {$appointmentData['date']} a las {$appointmentData['time']}.";
+        $message = "Hola {$orderData['client_name']}, tu pedido con {$orderData['employee_name']} ha sido agendado para el día {$orderData['date']} a las {$orderData['time']}.";
         return $this->sendMessage($phone, $message);
     }
 
     /**
-     * Sends an appointment reminder message.
+     * Sends an order reminder message.
      */
-    public function sendReminder($phone, $appointmentData)
+    public function sendReminder($phone, $orderData)
     {
-        $message = "Recordatorio: {$appointmentData['patient_name']}, tienes una cita médica mañana con el Dr/Dra. {$appointmentData['doctor_name']} a las {$appointmentData['time']}. ¡Por favor sé puntual!";
+        $message = "Recordatorio: {$orderData['client_name']}, tienes un pedido programado para mañana con {$orderData['employee_name']} a las {$orderData['time']}.";
         return $this->sendMessage($phone, $message);
     }
 
