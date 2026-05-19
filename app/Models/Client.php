@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Patient extends Model
+class Client extends Model
 {
 
     protected $fillable = [
@@ -31,8 +31,8 @@ class Patient extends Model
         return $this->belongsTo(BloodType::class);
     }
 
-    public function appointments()
+    public function orders()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Order::class);
     }
 }

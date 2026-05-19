@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
 #[ObservedBy(AppointmentObserver::class)]
-class Appointment extends Model
+class Order extends Model
 {
     protected $fillable = [
-        'patient_id',
-        'doctor_id',
+        'client_id',
+        'employee_id',
         'date',
         'start_time',
         'end_time',
@@ -20,14 +20,14 @@ class Appointment extends Model
         'status',
     ];
 
-    public function patient()
+    public function client()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Client::class);
     }
 
-    public function doctor()
+    public function employee()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Employee::class);
     }
 
     public function consultation()

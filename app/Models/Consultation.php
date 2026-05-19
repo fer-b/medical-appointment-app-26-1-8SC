@@ -7,15 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Consultation extends Model
 {
     protected $fillable = [
-        'appointment_id',
+        'order_id',
         'diagnosis',
         'treatment',
         'notes',
     ];
 
-    public function appointment()
+    public function order()
     {
-        return $this->belongsTo(Appointment::class);
+        return $this->belongsTo(Order::class);
     }
 
     public function medicines()
