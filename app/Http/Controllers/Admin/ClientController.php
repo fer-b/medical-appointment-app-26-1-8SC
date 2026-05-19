@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Models\BloodType;
+use App\Models\ClientCategory;
 
 class ClientController extends Controller
 {
@@ -46,8 +46,8 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {   
-        $bloodTypes = BloodType::all();
-        return view('admin.clients.edit', compact('client', 'bloodTypes'));
+        $clientCategories = ClientCategory::all();
+        return view('admin.clients.edit', compact('client', 'clientCategories'));
     }
 
     /**
@@ -56,7 +56,7 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $data = $request->validate([
-            'blood_type_id' => 'nullable|exists:blood_types,id',
+            'client_category_id' => 'nullable|exists:client_categories,id',
             'allergies' => 'nullable|string|min:3|max:255',
             'chronic_conditions' => 'nullable|string|min:3|max:255',
             'surgical_history' => 'nullable|string|min:3|max:255',

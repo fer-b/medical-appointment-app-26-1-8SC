@@ -290,7 +290,7 @@ return [
         'chronic_conditions'       => 'enfermedades crónicas',
         'surgical_history'         => 'antecedentes quirúrgico',
         'family_history'           => 'antecedentes familiares',
-        'blood_type_id'            => 'tipo de sangre',
+        'client_category_id'       => 'categoría de cliente',
         'emergency_contact_name'   => 'nombre del contacto de emergencia',
         'emergency_contact_phone'  => 'teléfono del contacto de emergencia',
         'emergency_contact_relationship' => 'relación del contacto',

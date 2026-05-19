@@ -20,9 +20,9 @@ return new class extends Migration
                 // Si borro un usuario, que se borre el paciente también
                 ->onDelete('cascade');
 
-            $table->foreignId('blood_type_id')
+            $table->foreignId('client_category_id')
                 ->nullable()
-                ->constrained('blood_types')
+                ->constrained('client_categories')
                 ->onDelete('set null');
 
             $table->string('allergies')

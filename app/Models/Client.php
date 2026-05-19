@@ -9,7 +9,7 @@ class Client extends Model
 {
 
     protected $fillable = [
-        'blood_type_id',
+        'client_category_id',
         'allergies',
         'chronic_conditions',
         'surgical_history',
@@ -26,9 +26,9 @@ class Client extends Model
     }
 
     // Relación uno a uno inversa
-    public function bloodType()
+    public function clientCategory()
     {
-        return $this->belongsTo(BloodType::class);
+        return $this->belongsTo(ClientCategory::class);
     }
 
     public function orders()
