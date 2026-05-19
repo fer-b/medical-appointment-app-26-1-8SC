@@ -23,30 +23,30 @@
       'active' => request()->routeIs('admin.users.*'),
       ],
       [
-      'name' => 'Pacientes',
-      'icono' => 'fa-solid fa-user-injured',
-      'href' => route('admin.patients.index'),
-      'active' => request()->routeIs('admin.patients.*'),
+      'name' => 'Clientes',
+      'icono' => 'fa-solid fa-users-line',
+      'href' => route('admin.clients.index'),
+      'active' => request()->routeIs('admin.clients.*'),
       ],
       [
-      'name' => 'Doctores',
-      'icono' => 'fa-solid fa-user-doctor',
-      'href' => route('admin.doctors.index'),
-      'active' => request()->routeIs('admin.doctors.*'),
+      'name' => 'Empleados',
+      'icono' => 'fa-solid fa-id-badge',
+      'href' => route('admin.employees.index'),
+      'active' => request()->routeIs('admin.employees.*'),
       ],
       [
-      'name' => 'Citas médicas',
-      'icono' => 'fa-solid fa-calendar-check',
-      'href' => route('admin.appointments.index'),
-      'active' => request()->routeIs('admin.appointments.*'),
+      'name' => 'Pedidos / Reservas',
+      'icono' => 'fa-solid fa-beer-mug-empty',
+      'href' => route('admin.orders.index'),
+      'active' => request()->routeIs('admin.orders.*'),
       ]
    ];
 @endphp
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-neutral-primary-soft border-e border-default">
       <a href="/" class="flex items-center ps-2.5 mb-5">
-         <img src="{{ asset('images/logo_itm.png') }}" class="h-6 me-3" alt="ITM Logo" />
-         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">ITM</span>
+         <img src="{{ asset('images/logo_itm.png') }}" class="h-6 me-3" alt="Home Brewing Logo" />
+         <span class="self-center text-lg text-heading font-semibold whitespace-nowrap">Home Brewing</span>
       </a>
       <ul class="space-y-2 font-medium">
          @foreach ($links as $link)

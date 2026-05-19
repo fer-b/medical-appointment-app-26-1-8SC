@@ -32,7 +32,7 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-blue-100">
+    <body class="font-sans antialiased bg-amber-50">
         
     @include('layouts.includes.admin.navigation')
 
