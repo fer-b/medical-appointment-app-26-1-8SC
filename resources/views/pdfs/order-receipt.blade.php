@@ -7,47 +7,56 @@
     <style>
         body { font-family: 'Helvetica', 'Arial', sans-serif; color: #333; line-height: 1.6; }
         .container { width: 100%; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        .header { text-align: center; border-bottom: 2px solid #2563eb; padding-bottom: 15px; margin-bottom: 20px; }
-        .header h1 { margin: 0; color: #1e40af; }
+        .header { text-align: center; border-bottom: 2px solid #d97706; padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { margin: 0; color: #b45309; }
         .details-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .details-table th, .details-table td { padding: 10px; border-bottom: 1px solid #eee; text-align: left; }
-        .details-table th { background-color: #f8fafc; font-weight: bold; width: 30%; }
+        .details-table th { background-color: #fef3c7; font-weight: bold; width: 30%; color: #92400e; }
         .footer { text-align: center; font-size: 12px; color: #64748b; border-top: 1px solid #eee; padding-top: 15px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Comprobante de Pedido</h1>
-            <p>Home Brewing</p>
+            <h1>Comprobante de Pedido Cervecero</h1>
+            <p>Home Brewing - Cerveza Artesanal</p>
         </div>
         
         <table class="details-table">
             <tr>
                 <th>Cliente</th>
-                <td>{{ $order->client->user->name }}</td>
+                <td>{{ $order->client->user->name }} ({{ $order->client->clientCategory->name ?? 'General' }})</td>
             </tr>
             <tr>
-                <th>Atendido por (Rol)</th>
-                <td>{{ $order->employee->user->name }} ({{ $order->employee->specialty }})</td>
+                <th>Encargado de Preparación</th>
+                <td>{{ $order->employee->user->name ?? 'N/A' }}</td>
             </tr>
             <tr>
                 <th>Fecha de Entrega</th>
                 <td>{{ \Carbon\Carbon::parse($order->date)->format('d/m/Y') }}</td>
             </tr>
             <tr>
-                <th>Hora Programada</th>
-                <td>{{ \Carbon\Carbon::parse($order->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($order->end_time)->format('H:i') }}</td>
+                <th>Cargamento</th>
+                <td>
+                    @php $items = []; @endphp
+                    @if($order->six_quantity > 0)
+                        @php $items[] = "Six Pack: x" . $order->six_quantity . " unidades"; @endphp
+                    @endif
+                    @if($order->caguama_quantity > 0)
+                        @php $items[] = "Caguama (940ml): x" . $order->caguama_quantity . " unidades"; @endphp
+                    @endif
+                    {{ count($items) > 0 ? implode(', ', $items) : 'Ninguno especificado' }}
+                </td>
             </tr>
             <tr>
-                <th>Motivo del Pedido</th>
-                <td>{{ $order->reason ?? 'No especificado' }}</td>
+                <th>Notas del Pedido</th>
+                <td>{{ $order->reason ?? 'Ninguna nota especial' }}</td>
             </tr>
         </table>
         
         <div class="footer">
             <p>Por favor, recuerde que su pedido estará listo en la fecha indicada.</p>
-            <p>Si necesita cancelar, comuníquese con al menos 2 horas de anticipación.</p>
+            <p>¡Gracias por elegir a Home Brewing!</p>
         </div>
     </div>
 </body>

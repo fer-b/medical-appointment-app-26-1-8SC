@@ -18,6 +18,8 @@ class Order extends Model
         'duration',
         'reason',
         'status',
+        'six_quantity',
+        'caguama_quantity',
     ];
 
     public function client()

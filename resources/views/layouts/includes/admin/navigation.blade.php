@@ -9,7 +9,7 @@
    </svg>
          </button>
         <a href="/" class="flex ms-2 md:me-24">
-          <img src="{{ asset('images/logo_itm.png') }}" class="h-6 me-3" alt="ITM Logo" />
+          <img src="{{ asset('images/cerveza_logo.png') }}" class="h-9 me-3 object-contain" alt="Home Brewing Logo" />
           <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white"></span>
         </a>
       </div>
