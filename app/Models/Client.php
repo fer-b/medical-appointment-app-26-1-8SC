@@ -9,6 +9,7 @@ class Client extends Model
 {
 
     protected $fillable = [
+        'user_id',
         'client_category_id',
         'allergies',
         'chronic_conditions',

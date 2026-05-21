@@ -1,45 +1,48 @@
 @php
-   //arreglo de iconos
+   // Arreglo de iconos dinámico basado en roles
    $links = [
       [
       'name' => 'Dashboard',
       'icono' => 'fa-solid fa-gauge',
       'href' => route('admin.dashboard'),
       'active' => request()->routeIs('admin.dashboard')
-      ],
-      [
-      'header' => 'Gestión'
-      ],
-      [
-      'name' => 'Roles y permisos',
-      'icono' => 'fa-solid fa-shield-halved',
-      'href' => route('admin.roles.index'),
-      'active' => request()->routeIs('admin.roles.*'),
-      ],
-      [
-      'name' => 'Usuarios',
-      'icono' => 'fa-solid fa-users',
-      'href' => route('admin.users.index'),
-      'active' => request()->routeIs('admin.users.*'),
-      ],
-      [
-      'name' => 'Clientes',
-      'icono' => 'fa-solid fa-users-line',
-      'href' => route('admin.clients.index'),
-      'active' => request()->routeIs('admin.clients.*'),
-      ],
-      [
-      'name' => 'Empleados',
-      'icono' => 'fa-solid fa-id-badge',
-      'href' => route('admin.employees.index'),
-      'active' => request()->routeIs('admin.employees.*'),
-      ],
-      [
+      ]
+   ];
+
+   if(auth()->user()->hasRole('admin')) {
+       $links[] = [ 'header' => 'Gestión' ];
+       
+       $links[] = [
+          'name' => 'Roles y permisos',
+          'icono' => 'fa-solid fa-shield-halved',
+          'href' => route('admin.roles.index'),
+          'active' => request()->routeIs('admin.roles.*'),
+       ];
+       $links[] = [
+          'name' => 'Usuarios',
+          'icono' => 'fa-solid fa-users',
+          'href' => route('admin.users.index'),
+          'active' => request()->routeIs('admin.users.*'),
+       ];
+       $links[] = [
+          'name' => 'Clientes',
+          'icono' => 'fa-solid fa-users-line',
+          'href' => route('admin.clients.index'),
+          'active' => request()->routeIs('admin.clients.*'),
+       ];
+       $links[] = [
+          'name' => 'Empleados',
+          'icono' => 'fa-solid fa-id-badge',
+          'href' => route('admin.employees.index'),
+          'active' => request()->routeIs('admin.employees.*'),
+       ];
+   }
+
+   $links[] = [
       'name' => 'Pedidos / Reservas',
       'icono' => 'fa-solid fa-beer-mug-empty',
       'href' => route('admin.orders.index'),
       'active' => request()->routeIs('admin.orders.*'),
-      ]
    ];
 @endphp
 <aside id="top-bar-sidebar" class="fixed top-0 left-0 z-40 w-64 h-full transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">

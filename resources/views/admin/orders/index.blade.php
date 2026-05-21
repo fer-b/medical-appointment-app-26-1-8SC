@@ -5,14 +5,8 @@
     ],
     [
         'name' => 'Pedidos / Reservas',
-    ],
+    ]
 ]">
-    <x-slot name="action">
-        <a class="text-white bg-amber-600 hover:bg-amber-700 focus:ring-4 focus:ring-amber-300 font-bold rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none transition-all" href="{{ route('admin.orders.create') }}">
-            + Nuevo Pedido
-        </a>
-    </x-slot>
-
     <div class="relative overflow-x-auto shadow-sm sm:rounded-xl border border-gray-100">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-white">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50/75 border-b border-gray-100">
