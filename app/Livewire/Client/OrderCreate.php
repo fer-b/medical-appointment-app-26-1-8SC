@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderCreate extends Component
 {
+    use \App\Traits\ManagesBeerStock;
+
     // Form fields
     public $searchDate;
     public $reason;
@@ -28,7 +30,12 @@ class OrderCreate extends Component
 
     public function mount()
     {
+        // Check if user is logged in and has client role, else redirect to public order create
+        if (!auth()->check() || !auth()->user()->hasRole('client')) {
+            return redirect()->route('public.order.create');
+        }
         $this->searchDate = date('Y-m-d');
+        $this->loadStock();
     }
 
     public function incrementSix()
@@ -61,6 +68,8 @@ class OrderCreate extends Component
 
     public function confirmOrder()
     {
+        $this->loadStock();
+
         // Custom validations
         $this->validate([
             'searchDate' => 'required|date|after_or_equal:today',
@@ -123,6 +132,8 @@ class OrderCreate extends Component
             'caguama_quantity' => $this->orderCaguama ? $this->caguamaQty : 0,
             'status' => 1 // Programado
         ]);
+
+        $this->loadStock();
 
         session()->flash('swal', [
             'icon' => 'success',

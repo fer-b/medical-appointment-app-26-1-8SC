@@ -84,26 +84,45 @@
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <!-- Format 1: Six Pack -->
-                                <div class="relative flex flex-col justify-between p-6 bg-white rounded-2xl border-2 {{ $orderSix ? 'border-amber-500 bg-amber-50/20' : 'border-gray-100 hover:border-gray-200' }} transition-all duration-300 shadow-sm">
+                                <div class="relative flex flex-col justify-between p-6 bg-white rounded-2xl border-2 {{ $stockSix <= 0 ? 'border-gray-200 bg-gray-50/50 opacity-75' : ($orderSix ? 'border-amber-500 bg-amber-50/20' : 'border-gray-100 hover:border-gray-200') }} transition-all duration-300 shadow-sm">
                                     <div>
                                         <div class="flex justify-between items-start mb-4">
                                             <div class="p-3 bg-amber-100/50 rounded-xl text-amber-800">
                                                 <i class="fa-solid fa-boxes-stacked text-2xl"></i>
                                             </div>
                                             <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" wire:model.live="orderSix" class="sr-only peer">
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                                                <input type="checkbox" wire:model.live="orderSix" class="sr-only peer" @if($stockSix <= 0) disabled @endif>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500 peer-disabled:bg-gray-100 peer-disabled:after:bg-gray-200"></div>
                                             </label>
                                         </div>
                                         <h4 class="text-xl font-bold text-gray-900">Six Pack</h4>
                                         <p class="text-xs text-gray-500 mb-4">6 piezas de 355 ml (Lata)</p>
                                         <div class="flex justify-between items-center py-2 border-t border-b border-gray-100/50 my-4">
                                             <span class="text-sm font-semibold text-gray-600">Disponibles:</span>
-                                            <span class="text-sm font-bold text-amber-800">{{ $stockSix }} packs</span>
+                                            @if($stockSix <= 0)
+                                                <span class="text-sm font-bold text-red-600">Agotado</span>
+                                            @elseif($stockSix < 10)
+                                                <span class="text-sm font-bold text-amber-600">{{ $stockSix }} packs</span>
+                                            @else
+                                                <span class="text-sm font-bold text-amber-800">{{ $stockSix }} packs</span>
+                                            @endif
                                         </div>
+                                        @if($stockSix <= 0)
+                                            <div class="mt-2 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-lg p-2.5 flex items-center gap-1.5">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                <span>¡Ya no hay stock!</span>
+                                            </div>
+                                        @elseif($stockSix < 10)
+                                            <div class="mt-2 text-xs font-bold text-amber-600 bg-amber-50 border border-amber-100 rounded-lg p-2.5 flex items-center gap-1.5 animate-pulse">
+                                                <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                                                <span>Quedan pocas piezas</span>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mt-4">
-                                        @if($orderSix)
+                                        @if($stockSix <= 0)
+                                            <div class="text-center py-3 text-sm text-red-500 font-bold bg-red-50 border border-red-100 rounded-xl">No disponible</div>
+                                        @elseif($orderSix)
                                             <label class="block mb-2 text-xs font-bold text-amber-900 uppercase tracking-wider">Cantidad</label>
                                             <div class="flex items-center justify-between bg-white border border-amber-200 rounded-xl p-1 shadow-sm">
                                                 <button type="button" wire:click="decrementSix" class="w-10 h-10 flex items-center justify-center rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 font-bold">-</button>
@@ -118,26 +137,45 @@
                                 </div>
 
                                 <!-- Format 2: Caguama -->
-                                <div class="relative flex flex-col justify-between p-6 bg-white rounded-2xl border-2 {{ $orderCaguama ? 'border-amber-500 bg-amber-50/20' : 'border-gray-100 hover:border-gray-200' }} transition-all duration-300 shadow-sm">
+                                <div class="relative flex flex-col justify-between p-6 bg-white rounded-2xl border-2 {{ $stockCaguama <= 0 ? 'border-gray-200 bg-gray-50/50 opacity-75' : ($orderCaguama ? 'border-amber-500 bg-amber-50/20' : 'border-gray-100 hover:border-gray-200') }} transition-all duration-300 shadow-sm">
                                     <div>
                                         <div class="flex justify-between items-start mb-4">
                                             <div class="p-3 bg-amber-100/50 rounded-xl text-amber-800">
                                                 <i class="fa-solid fa-bottle-beer text-2xl"></i>
                                             </div>
                                             <label class="inline-flex items-center cursor-pointer">
-                                                <input type="checkbox" wire:model.live="orderCaguama" class="sr-only peer">
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+                                                <input type="checkbox" wire:model.live="orderCaguama" class="sr-only peer" @if($stockCaguama <= 0) disabled @endif>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500 peer-disabled:bg-gray-100 peer-disabled:after:bg-gray-200"></div>
                                             </label>
                                         </div>
                                         <h4 class="text-xl font-bold text-gray-900">Caguama</h4>
                                         <p class="text-xs text-gray-500 mb-4">Envase retornable de 940 ml</p>
                                         <div class="flex justify-between items-center py-2 border-t border-b border-gray-100/50 my-4">
                                             <span class="text-sm font-semibold text-gray-600">Disponibles:</span>
-                                            <span class="text-sm font-bold text-amber-800">{{ $stockCaguama }} pzs</span>
+                                            @if($stockCaguama <= 0)
+                                                <span class="text-sm font-bold text-red-600">Agotado</span>
+                                            @elseif($stockCaguama < 10)
+                                                <span class="text-sm font-bold text-amber-600">{{ $stockCaguama }} pzs</span>
+                                            @else
+                                                <span class="text-sm font-bold text-amber-800">{{ $stockCaguama }} pzs</span>
+                                            @endif
                                         </div>
+                                        @if($stockCaguama <= 0)
+                                            <div class="mt-2 text-xs font-bold text-red-600 bg-red-50 border border-red-100 rounded-lg p-2.5 flex items-center gap-1.5">
+                                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                                <span>¡Ya no hay stock!</span>
+                                            </div>
+                                        @elseif($stockCaguama < 10)
+                                            <div class="mt-2 text-xs font-bold text-amber-600 bg-amber-50 border border-amber-100 rounded-lg p-2.5 flex items-center gap-1.5 animate-pulse">
+                                                <i class="fa-solid fa-circle-exclamation text-amber-500"></i>
+                                                <span>Quedan pocas piezas</span>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mt-4">
-                                        @if($orderCaguama)
+                                        @if($stockCaguama <= 0)
+                                            <div class="text-center py-3 text-sm text-red-500 font-bold bg-red-50 border border-red-100 rounded-xl">No disponible</div>
+                                        @elseif($orderCaguama)
                                             <label class="block mb-2 text-xs font-bold text-amber-900 uppercase tracking-wider">Cantidad</label>
                                             <div class="flex items-center justify-between bg-white border border-amber-200 rounded-xl p-1 shadow-sm">
                                                 <button type="button" wire:click="decrementCaguama" class="w-10 h-10 flex items-center justify-center rounded-lg bg-amber-50 text-amber-700 hover:bg-amber-100 font-bold">-</button>

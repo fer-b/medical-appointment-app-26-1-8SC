@@ -18,7 +18,9 @@ Route::middleware([
         if ($user->hasRole('admin') || $user->hasRole('employee')) {
             return redirect()->route('admin.dashboard');
         }
-        // Clientes no tienen panel, van al inicio
-        return redirect('/');
+        // Clientes van a su panel de pedidos
+        return redirect()->route('client.order.create');
     })->name('dashboard');
+
+    Route::get('/mi-pedido', \App\Livewire\Client\OrderCreate::class)->name('client.order.create');
 });

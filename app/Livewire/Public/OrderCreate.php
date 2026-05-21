@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 
 class OrderCreate extends Component
 {
+    use \App\Traits\ManagesBeerStock;
+
     // Public user fields
     public $name;
     public $email;
@@ -33,6 +35,14 @@ class OrderCreate extends Component
     public $stockCaguama = 30;
 
     public $orderCompleted = false;
+
+    public function mount()
+    {
+        if (auth()->check() && auth()->user()->hasRole('client')) {
+            return redirect()->route('client.order.create');
+        }
+        $this->loadStock();
+    }
 
     public function incrementSix()
     {
@@ -64,6 +74,8 @@ class OrderCreate extends Component
 
     public function confirmOrder()
     {
+        $this->loadStock();
+
         // Custom validations
         $this->validate([
             'name' => 'required|string|max:255',
@@ -148,6 +160,8 @@ class OrderCreate extends Component
             'caguama_quantity' => $this->orderCaguama ? $this->caguamaQty : 0,
             'status' => 1 // Programado / Pendiente
         ]);
+
+        $this->loadStock();
 
         $this->orderCompleted = true;
     }

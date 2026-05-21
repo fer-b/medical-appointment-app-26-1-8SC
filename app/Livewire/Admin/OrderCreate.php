@@ -9,6 +9,8 @@ use App\Models\Order;
 
 class OrderCreate extends Component
 {
+    use \App\Traits\ManagesBeerStock;
+
     // Basic fields
     public $client_id;
     public $searchDate;
@@ -29,6 +31,7 @@ class OrderCreate extends Component
     public function mount()
     {
         $this->searchDate = date('Y-m-d');
+        $this->loadStock();
     }
 
     public function incrementSix()
@@ -61,6 +64,8 @@ class OrderCreate extends Component
 
     public function confirmOrder()
     {
+        $this->loadStock();
+
         // Custom validations
         $this->validate([
             'client_id' => 'required|exists:clients,id',
@@ -112,6 +117,8 @@ class OrderCreate extends Component
             'caguama_quantity' => $this->orderCaguama ? $this->caguamaQty : 0,
             'status' => 1 // Programado / Pendiente
         ]);
+
+        $this->loadStock();
 
         session()->flash('swal', [
             'icon' => 'success',

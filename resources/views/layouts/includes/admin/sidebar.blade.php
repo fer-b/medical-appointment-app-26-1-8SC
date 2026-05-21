@@ -39,6 +39,13 @@
    }
 
    $links[] = [
+      'name' => 'Inventario / Stock',
+      'icono' => 'fa-solid fa-warehouse',
+      'href' => route('admin.stock.index'),
+      'active' => request()->routeIs('admin.stock.*'),
+   ];
+
+   $links[] = [
       'name' => 'Pedidos / Reservas',
       'icono' => 'fa-solid fa-beer-mug-empty',
       'href' => route('admin.orders.index'),
